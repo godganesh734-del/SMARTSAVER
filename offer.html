@@ -16,18 +16,18 @@
                 <div class="relative w-20 h-20 border-4 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
             </div>
             
-            <h3 class="text-2xl font-black text-slate-900 tracking-tight mb-2">Processing Your Request</h3>
-            <p class="text-xs font-bold text-emerald-600 uppercase tracking-widest mb-6">Secure Connection Established</p>
+            <h3 class="text-2xl font-black text-slate-900 tracking-tight mb-2">Finalizing Allocation</h3>
+            <p class="text-xs font-bold text-emerald-600 uppercase tracking-widest mb-6">Securing Session Link</p>
             
             <div class="bg-slate-900 rounded-2xl p-4 text-left font-mono text-xs text-blue-400 space-y-2 border border-slate-800 shadow-inner min-h-[110px]">
                 <div id="log-1" class="flex items-center space-x-2">
-                    <span class="text-slate-500">></span> <span id="text-1">Initializing secure handshake...</span>
+                    <span class="text-slate-500">></span> <span id="text-1">Parsing AI routing payload...</span>
                 </div>
                 <div id="log-2" class="hidden flex items-center space-x-2">
-                    <span class="text-slate-500">></span> <span id="text-2">Verifying region and IP allocation...</span>
+                    <span class="text-slate-500">></span> <span id="text-2">Validating responsive link connection...</span>
                 </div>
                 <div id="log-3" class="hidden flex items-center space-x-2">
-                    <span class="text-slate-500">></span> <span id="text-3">Searching available $25 voucher slots...</span>
+                    <span class="text-slate-500">></span> <span id="text-3">Mapping single slot token to node...</span>
                 </div>
             </div>
         </div>
@@ -37,9 +37,9 @@
                 ✓
             </div>
             
-            <h3 class="text-2xl font-black text-slate-900 tracking-tight mb-3">Slot Reserved Successfully!</h3>
+            <h3 class="text-2xl font-black text-slate-900 tracking-tight mb-3">Voucher Reserved!</h3>
             <p class="text-sm text-slate-500 leading-relaxed mb-8 px-2">
-                We have temporarily reserved <span class="font-bold text-slate-800">one $25 food promotional credit</span> for your session. Complete the final regional validation step on the next screen to receive your coupon code.
+                The assistant has successfully locked <span class="font-bold text-slate-800">one $25 regional promotional credit slot</span> for your session. Complete the final step to finalize the validation on the network server.
             </p>
             
             <button onclick="redirectToCPA()" class="w-full bg-slate-900 hover:bg-blue-600 text-white font-black py-4 px-6 rounded-xl transition-all shadow-lg hover:shadow-xl transform active:scale-[0.99] uppercase tracking-wider text-sm">
@@ -47,14 +47,14 @@
             </button>
             
             <p class="text-[10px] text-slate-400 font-bold uppercase tracking-widest mt-6">
-                Allocation expires in 3:00 minutes
+                Link expires in <span id="countdown" class="text-rose-600 font-extrabold text-xs">03:00</span> minutes
             </p>
         </div>
 
     </div>
 
     <script>
-        // Terminal Logs Update Simulation
+        // Terminal Logs Update
         setTimeout(() => {
             document.getElementById('log-2').classList.remove('hidden');
         }, 1200);
@@ -63,13 +63,36 @@
             document.getElementById('log-3').classList.remove('hidden');
         }, 2500);
 
-        // 4.2 Seconds ke baad screen automatic change hogi aur action screen khulegi
+        // Loading complete hone ke baad action screen aayegi aur timer start hoga
         setTimeout(() => {
             document.getElementById('loading-state').classList.add('hidden');
             document.getElementById('action-state').classList.remove('hidden');
+            startTimer(180); // 180 seconds = 3 minutes
         }, 4200);
 
-        // Final Redirect Function (Aapka original OGAds Link)
+        // Real Countdown Timer Function
+        function startTimer(duration) {
+            let timer = duration, minutes, seconds;
+            const display = document.getElementById('countdown');
+            
+            const countdownInterval = setInterval(() => {
+                minutes = parseInt(timer / 60, 10);
+                seconds = parseInt(timer % 60, 10);
+
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                display.textContent = minutes + ":" + seconds;
+
+                if (--timer < 0) {
+                    clearInterval(countdownInterval);
+                    display.textContent = "00:00";
+                    // Timer khatam hone par agar button disable karna ho ya reload karna ho toh yahan handle kar sakte hain
+                }
+            }, 1000);
+        }
+
+        // OGAds Redirect Link
         function redirectToCPA() {
             window.location.href = "https://checkmyapp.store/cl/i/pqrro4"; 
         }
